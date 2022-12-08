@@ -5,9 +5,9 @@ import './books.scss';
 const Books = () => {
   const authors = ['George RR Martin', 'Colleen Hoover', 'Louise Penny', 'Sarah J. Maas'];
 
-  const handleFormSubmit = (ev, form) => {
+  const handleFormSubmit = (ev) => {
     ev.preventDefault();
-    form.reset();
+    ev.target.reset();
   };
 
   const books = [
