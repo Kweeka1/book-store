@@ -21,7 +21,7 @@ const booksReducer = (state = books, action) => {
 
 export const createBook = (book) => ({
   type: CREATE,
-  payload: { ...book, id: Math.random().toString(36).replace('0.', '') },
+  payload: { ...book, id: Math.random().toString(36).substring(2) },
 });
 
 export const removeBook = (book) => ({ type: REMOVE, payload: book });

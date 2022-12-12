@@ -12,28 +12,28 @@ const Books = () => {
 
   const books = [
     {
-      id: Math.random().toString(36).replace('0.', ''),
+      id: Math.random().toString(36).substring(2),
       category: 'Epic fantasy',
       author: 'George RR Martin',
       title: 'A Song of Ice and Fire',
       percentage: 84,
     },
     {
-      id: Math.random().toString(36).replace('0.', ''),
+      id: Math.random().toString(36).substring(2),
       category: 'Romance',
       author: 'Colleen Hoover',
       title: 'It Starts With Us',
       percentage: 69,
     },
     {
-      id: Math.random().toString(36).replace('0.', ''),
+      id: Math.random().toString(36).substring(2),
       category: 'Mystery',
       author: 'Louise Penny',
       title: 'A World of Curiosities',
       percentage: 37,
     },
     {
-      id: Math.random().toString(36).replace('0.', ''),
+      id: Math.random().toString(36).substring(2),
       category: 'Fantasy',
       author: 'Sarah J. Maas',
       title: 'A Court of Mist and Fury',
