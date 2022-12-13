@@ -11,6 +11,6 @@ const categoriesReducer = (state = categories, action) => {
   }
 };
 
-export const checkCategoryStatus = (category) => ({ type: CHECK_STATUS, category });
+export const checkCategoryStatus = (category) => ({ type: CHECK_STATUS, payload: category });
 
 export default categoriesReducer;
