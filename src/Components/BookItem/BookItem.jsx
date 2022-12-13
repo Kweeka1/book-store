@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import './bookItem.scss';
 
-const BookItem = ({ bookDetails }) => (
+const BookItem = ({ bookDetails, handleDeleteBook }) => (
   <div className="book-item">
     <div className="book">
       <div className="book-details">
@@ -11,7 +11,7 @@ const BookItem = ({ bookDetails }) => (
       </div>
       <div className="book-actions">
         <button type="button">Comments</button>
-        <button type="button">Remove</button>
+        <button onClick={handleDeleteBook} type="button">Remove</button>
         <button type="button">Edit</button>
       </div>
     </div>
