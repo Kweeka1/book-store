@@ -1,8 +1,9 @@
 const books = [];
 
 const removeBookFromState = (state, id) => {
-  const filteredBooks = state.filter((book) => book.id !== id);
-  return [...state, filteredBooks];
+  const bookToBeRemoved = state.find((book) => book.id === id);
+  if (!bookToBeRemoved) return state;
+  return state.filter((book) => book !== bookToBeRemoved);
 };
 
 const CREATE = 'bookStore/books/CREATE';
@@ -13,7 +14,7 @@ const booksReducer = (state = books, action) => {
     case CREATE:
       return [...state, action.payload];
     case REMOVE:
-      return removeBookFromState(state, action.payload);
+      return [...removeBookFromState(state, action.payload)];
     default:
       return state;
   }
