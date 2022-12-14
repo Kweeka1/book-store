@@ -1,36 +1,30 @@
 import { useSelector, useDispatch } from 'react-redux';
 import BookForm from '../../Components/BookForm/BookForm';
 import BookItem from '../../Components/BookItem/BookItem';
-import { createBook, removeBook } from '../../redux/books/books';
+import { addBookRequest, removeBookRequest } from '../../redux/books/books';
 import './books.scss';
 
 const Books = () => {
   const authors = ['George RR Martin', 'Colleen Hoover', 'Louise Penny', 'Sarah J. Maas'];
-  const categories = ['Epic fantasy', 'Romance', 'Mystery', 'Fantasy'];
 
   const books = useSelector((state) => state.books);
   const dispatch = useDispatch();
 
-  const getRandomCategory = (categories, start = 0) => {
-    const index = Math.floor(Math.random() * (categories.length - start) + start);
-    return categories[index];
-  };
-
   const handleFormSubmit = (ev, book) => {
     ev.preventDefault();
 
-    dispatch(createBook({
+    if (!book.title.length < 1 || !book.category.length < 1) return;
+
+    dispatch(addBookRequest({
+      item_id: Math.random().toString(36).substring(2),
       ...book,
-      percentage: Math.floor(Math.random() * 100),
-      id: Math.random().toString(36).substring(2),
-      category: getRandomCategory(categories),
     }));
 
     ev.target.reset();
   };
 
   const handleDeleteBook = (id) => {
-    dispatch(removeBook(id));
+    dispatch(removeBookRequest(id));
   };
 
   return (

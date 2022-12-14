@@ -1,59 +1,75 @@
-const books = [
-  {
-    id: Math.random().toString(36).substring(2),
-    category: 'Epic fantasy',
-    author: 'George RR Martin',
-    title: 'A Song of Ice and Fire',
-    percentage: Math.floor(Math.random() * 100),
-  },
-  {
-    id: Math.random().toString(36).substring(2),
-    category: 'Romance',
-    author: 'Colleen Hoover',
-    title: 'It Starts With Us',
-    percentage: Math.floor(Math.random() * 100),
-  },
-  {
-    id: Math.random().toString(36).substring(2),
-    category: 'Mystery',
-    author: 'Louise Penny',
-    title: 'A World of Curiosities',
-    percentage: Math.floor(Math.random() * 100),
-  },
-  {
-    id: Math.random().toString(36).substring(2),
-    category: 'Fantasy',
-    author: 'Sarah J. Maas',
-    title: 'A Court of Mist and Fury',
-    percentage: Math.floor(Math.random() * 100),
-  },
-];
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import { removeBookAsync, createBookAsync, getBooksAsync } from '../../Services/bookStoreAPI';
 
-const removeBookFromState = (state, id) => {
-  const bookToBeRemoved = state.find((book) => book.id === id);
-  if (!bookToBeRemoved) return state;
-  return state.filter((book) => book !== bookToBeRemoved);
-};
+const books = [];
 
 const CREATE = 'bookStore/books/CREATE';
 const REMOVE = 'bookStore/books/REMOVE';
+const LOAD = 'bookStore/books/LOAD';
+
+const START_CREATE_REQUEST = 'bookStore/books/START_CREATE_REQUEST';
+const START_REMOVE_REQUEST = 'bookStore/books/START_REMOVE_REQUEST';
+const START_LOAD_REQUEST = 'bookStore/books/START_LOAD_REQUEST';
+
+const createBook = (books, id) => ({
+  type: CREATE,
+  payload: {
+    id,
+    ...books[id][0],
+    percentage: Math.floor(Math.random() * 100),
+  },
+});
+
+const loadBooks = (books) => ({
+  type: LOAD,
+  payload: Object.entries(books).map(([id, item]) => ({
+    id,
+    ...item[0],
+    percentage: Math.floor(Math.random() * 100),
+  })),
+});
+
+const removeBook = (books, id) => {
+  const collection = books;
+  delete collection[id];
+
+  return {
+    type: REMOVE,
+    payload: Object.entries(collection).map(([id, item]) => ({
+      id,
+      ...item[0],
+      percentage: Math.floor(Math.random() * 100),
+    })),
+  };
+};
+
+export const loadBooksRequest = createAsyncThunk(START_LOAD_REQUEST, async (_, thunk) => {
+  const books = await getBooksAsync();
+  return thunk.dispatch(loadBooks(books));
+});
+
+export const removeBookRequest = createAsyncThunk(START_REMOVE_REQUEST, async (id, thunk) => {
+  await removeBookAsync(id);
+  const books = await getBooksAsync();
+  return thunk.dispatch(removeBook(books, id));
+});
+
+export const addBookRequest = createAsyncThunk(START_CREATE_REQUEST, async (book, thunk) => {
+  await createBookAsync(book);
+  const books = await getBooksAsync();
+  return thunk.dispatch(createBook(books, book.item_id));
+});
 
 const booksReducer = (state = books, action) => {
   switch (action.type) {
     case CREATE:
       return [...state, action.payload];
     case REMOVE:
-      return [...removeBookFromState(state, action.payload)];
+    case LOAD:
+      return [...action.payload];
     default:
       return state;
   }
 };
-
-export const createBook = (book) => ({
-  type: CREATE,
-  payload: book,
-});
-
-export const removeBook = (book) => ({ type: REMOVE, payload: book });
 
 export default booksReducer;
