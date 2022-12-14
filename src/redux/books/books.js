@@ -13,7 +13,11 @@ const START_LOAD_REQUEST = 'bookStore/books/START_LOAD_REQUEST';
 
 const createBook = (books, id) => ({
   type: CREATE,
-  payload: { ...books[id][0], id },
+  payload: {
+    id,
+    ...books[id][0],
+    percentage: Math.floor(Math.random() * 100),
+  },
 });
 
 const loadBooks = (books) => ({
@@ -59,10 +63,7 @@ export const addBookRequest = createAsyncThunk(START_CREATE_REQUEST, async (book
 const booksReducer = (state = books, action) => {
   switch (action.type) {
     case CREATE:
-      return [...state, {
-        ...action.payload,
-        percentage: Math.floor(Math.random() * 100),
-      }];
+      return [...state, action.payload];
     case REMOVE:
     case LOAD:
       return [...action.payload];
