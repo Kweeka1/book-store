@@ -5,6 +5,7 @@ import './bookForm.scss';
 const BookForm = ({ authors, handleFormSubmit }) => {
   const [book, setBook] = useState({
     title: '',
+    category: '',
     author: authors[0],
   });
 
@@ -12,7 +13,7 @@ const BookForm = ({ authors, handleFormSubmit }) => {
     <div className="book-form-section">
       <h1>Add a new Book</h1>
       <form
-        onReset={() => setBook({ title: '', author: authors[0] })}
+        onReset={() => setBook({ title: '', category: '', author: authors[0] })}
         onSubmit={(ev) => handleFormSubmit(ev, book)}
         className="book-form"
       >
@@ -21,6 +22,12 @@ const BookForm = ({ authors, handleFormSubmit }) => {
           name="book-title"
           type="text"
           placeholder="Book title"
+        />
+        <input
+          onInput={(ev) => setBook((prev) => ({ ...prev, category: ev.target.value }))}
+          name="book-category"
+          type="text"
+          placeholder="Book category"
         />
         <select
           onChange={(ev) => setBook((prev) => ({ ...prev, author: ev.target.value }))}
