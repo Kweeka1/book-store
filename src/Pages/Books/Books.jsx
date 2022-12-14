@@ -13,7 +13,7 @@ const Books = () => {
   const handleFormSubmit = (ev, book) => {
     ev.preventDefault();
 
-    if (!book.title.length < 1 || !book.category.length < 1) return;
+    if (!book.title.trim() || !book.category.trim()) return;
 
     dispatch(addBookRequest({
       item_id: Math.random().toString(36).substring(2),
