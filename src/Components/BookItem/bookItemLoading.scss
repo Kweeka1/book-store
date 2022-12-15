@@ -1,0 +1,176 @@
+@keyframes skeleton-loading {
+  0% {
+    background-color: hsl(0deg 0% 45%);
+  }
+
+  100% {
+    background-color: hsl(240deg 0% 61%);
+  }
+}
+
+.skeleton {
+  opacity: 0.9;
+  animation: skeleton-loading 0.7s linear infinite alternate;
+}
+
+.book-item {
+  background-color: #fff;
+  border: 1px solid #e8e8e8;
+  padding: 1rem 2rem;
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  & > .book {
+    width: 45%;
+  }
+}
+
+.book-details {
+  margin-bottom: 1rem;
+  width: 100%;
+
+  & > .text-genre,
+  .text-title,
+  .text-author {
+    border-radius: 4px;
+    margin-bottom: 0.7rem;
+  }
+
+  & > .text-genre {
+    width: 30%;
+    height: 0.9rem;
+  }
+
+  & > .text-title {
+    width: 80%;
+    height: 1.4rem;
+  }
+
+  & > .text-author {
+    width: 20%;
+    height: 0.75rem;
+  }
+}
+
+.book-actions {
+  display: flex;
+  gap: 1.5rem;
+
+  & > div {
+    box-sizing: border-box;
+    border-radius: 4px;
+    width: 20%;
+    height: 2rem;
+    cursor: pointer;
+    position: relative;
+
+    &::after {
+      content: " ";
+      position: absolute;
+      background-color: #e8e8e8;
+      height: 1.5rem;
+      width: 0.125rem;
+      border-radius: 8px;
+      right: -12px;
+      top: 5px;
+    }
+
+    &:last-child::after {
+      content: none;
+    }
+  }
+}
+
+.book-progress {
+  display: flex;
+  gap: 5rem;
+  width: 50%;
+  justify-content: space-around;
+}
+
+.circular-progress-container {
+  padding: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+
+  & .progress-info {
+    & > .progress-status {
+      border-radius: 4px;
+      width: 100px;
+      height: 1.5rem;
+    }
+
+    & > .progress-percentage {
+      border-radius: 4px;
+      width: 45px;
+      height: 1.5rem;
+      margin-bottom: 0.7rem;
+    }
+  }
+
+  & > .circular-progress {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    z-index: 2;
+
+    &::after {
+      content: " ";
+      position: absolute;
+      width: 70px;
+      height: 70px;
+      background-color: #fff;
+      border-radius: 50%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 5;
+    }
+  }
+}
+
+.book-chapter {
+  flex-direction: column;
+  position: relative;
+  padding: 1.5rem;
+  display: flex;
+  gap: 1rem;
+
+  &::after {
+    content: " ";
+    position: absolute;
+    width: 0.125rem;
+    height: 4.375rem;
+    left: -30px;
+    top: 50%;
+    background-color: #e8e8e8;
+    transform: translateY(-50%);
+  }
+
+  & > .chapter {
+    & > div:first-child {
+      border-radius: 4px;
+      width: 180px;
+      height: 1.5rem;
+    }
+
+    & > div:last-child {
+      margin-top: 0.7rem;
+      border-radius: 4px;
+      width: 120px;
+      height: 1.5rem;
+    }
+  }
+
+  & > .button:last-child {
+    border-radius: 4px;
+    width: 100%;
+    height: 2rem;
+    cursor: pointer;
+  }
+}

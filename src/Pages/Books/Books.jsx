@@ -2,6 +2,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import BookForm from '../../Components/BookForm/BookForm';
 import BookItem from '../../Components/BookItem/BookItem';
 import { addBookRequest, removeBookRequest } from '../../redux/books/books';
+import BookItemLoading from '../../Components/BookItem/BookItemLoading';
 import './books.scss';
 
 const Books = () => {
@@ -29,13 +30,27 @@ const Books = () => {
 
   return (
     <div className="book-wrapper">
-      { books.map((book) => (
-        <BookItem
-          key={book.id}
-          bookDetails={book}
-          handleDeleteBook={() => handleDeleteBook(book.id)}
-        />
-      ))}
+      {
+        books.status === 'pending' && books.books_pending === 0
+          ? (
+            <>
+              <BookItemLoading />
+              <BookItemLoading />
+              <BookItemLoading />
+            </>
+          )
+          : books.books.map((book) => (
+            <BookItem
+              key={book.id}
+              bookDetails={book}
+              handleDeleteBook={() => handleDeleteBook(book.id)}
+            />
+          ))
+      }
+      {
+        books.status === 'pending' && books.books_pending > 0
+          && <BookItemLoading />
+      }
       <BookForm authors={authors} handleFormSubmit={handleFormSubmit} />
     </div>
   );
