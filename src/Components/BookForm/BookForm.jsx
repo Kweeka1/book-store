@@ -34,6 +34,7 @@ const BookForm = ({ authors, handleFormSubmit }) => {
           name="book-auhor"
           id="authors"
         >
+          <option disabled>Author</option>
           {
             // eslint-disable-next-line react/prop-types
             authors.map((auhor) => (
